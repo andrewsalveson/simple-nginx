@@ -7,18 +7,15 @@
 FROM ubuntu
 
 # File Author / Maintainer
-MAINTAINER Maintaner Name
+#MAINTAINER Maintaner Name
 
 # Install Nginx
 
 # Add application repository URL to the default sources
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ raring main universe" >> /etc/apt/sources.list
+#RUN echo "deb http://archive.ubuntu.com/ubuntu/ raring main universe" >> /etc/apt/sources.list
 
 # Update the repository
 RUN apt-get update
-
-# Install necessary tools
-RUN apt-get install -y nano wget dialog net-tools
 
 # Download and Install Nginx
 RUN apt-get install -y nginx  
@@ -29,11 +26,14 @@ RUN rm -v /etc/nginx/nginx.conf
 # Copy a configuration file from the current directory
 ADD nginx.conf /etc/nginx/
 
+RUN mkdir -p /var/www/static
+
 # Copy dist to www directory
-COPY ./dist /var/www/static
+COPY ./static /var/www/static
 
 # Append "daemon off;" to the beginning of the configuration
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN nginx -t
 
 # Expose ports
 EXPOSE 80
