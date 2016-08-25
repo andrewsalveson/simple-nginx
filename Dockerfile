@@ -30,7 +30,7 @@ RUN rm -v /etc/nginx/nginx.conf
 ADD nginx.conf /etc/nginx/
 
 # Copy dist to www directory
-COPY ./dist /var/www
+COPY ./dist /var/www/static
 
 # Append "daemon off;" to the beginning of the configuration
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
